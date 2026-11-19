@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root { color-scheme: dark; }
+html { scroll-behavior: auto; }
+body { @apply bg-bg text-white font-sans antialiased; }
+::selection { background: #F59E0B; color: #05070B; }
+
+.glass { background: rgba(255,255,255,0.08); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border: 1px solid rgba(255,255,255,0.12); }
+.btn { @apply inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3 font-bold transition duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent; }
+.btn-accent { @apply bg-accent text-bg hover:brightness-110 hover:shadow-[0_0_30px_rgba(245,158,11,.45)]; }
+.btn-ghost { @apply border border-white/25 text-white hover:bg-white/10; }
+.input { @apply w-full rounded-lg border border-white/15 bg-white/5 px-3 py-2.5 text-white placeholder:text-white/40 focus:border-accent focus:outline-none; }
+.label { @apply grid gap-1.5 text-sm font-semibold text-white/80; }
+.section { @apply mx-auto max-w-6xl px-5 py-20 md:py-28; }
+.eyebrow { @apply mb-3 inline-block text-xs font-bold uppercase tracking-[0.25em] text-accent; }
+.h2 { @apply text-3xl font-extrabold leading-tight md:text-5xl; }
+.gradient-text { background: linear-gradient(90deg,#F59E0B,#fff,#60a5fa,#F59E0B); background-size: 200% auto; -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+@media (hover: none) { .cursor-dot { display: none; } }

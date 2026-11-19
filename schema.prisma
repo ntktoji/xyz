@@ -1,0 +1,99 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  STAFF
+}
+
+enum ShipmentStatus {
+  BOOKED
+  PICKED_UP
+  IN_TRANSIT
+  AT_CUSTOMS
+  OUT_FOR_DELIVERY
+  DELIVERED
+  ON_HOLD
+  CANCELLED
+}
+
+enum InquiryStatus {
+  NEW
+  CONTACTED
+  CLOSED
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  name         String
+  passwordHash String
+  role         Role     @default(ADMIN)
+  createdAt    DateTime @default(now())
+}
+
+model Shipment {
+  id               String          @id @default(cuid())
+  trackingNumber   String          @unique
+  shipperName      String
+  consigneeName    String
+  origin           String
+  destination      String
+  currentLocation  String?
+  status           ShipmentStatus  @default(BOOKED)
+  weightKg         Float?
+  pieces           Int             @default(1)
+  expectedDelivery DateTime?
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
+  events           TrackingEvent[]
+
+  @@index([status])
+  @@index([createdAt])
+}
+
+model TrackingEvent {
+  id          String         @id @default(cuid())
+  shipmentId  String
+  shipment    Shipment       @relation(fields: [shipmentId], references: [id], onDelete: Cascade)
+  status      ShipmentStatus
+  location    String
+  description String
+  occurredAt  DateTime       @default(now())
+
+  @@index([shipmentId, occurredAt])
+}
+
+model Inquiry {
+  id        String        @id @default(cuid())
+  name      String
+  email     String?
+  phone     String
+  from      String
+  to        String
+  service   String
+  weightKg  String?
+  message   String?
+  status    InquiryStatus @default(NEW)
+  createdAt DateTime      @default(now())
+
+  @@index([status, createdAt])
+}
+
+model Application {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  phone     String
+  role      String
+  message   String?
+  createdAt DateTime @default(now())
+
+  @@index([createdAt])
+}

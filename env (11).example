@@ -1,0 +1,6 @@
+DATABASE_URL="postgresql://USER:PASSWORD@localhost:5432/jai_air_cargo?schema=public"
+JWT_SECRET="replace-with-a-random-string-of-at-least-32-characters"
+ADMIN_EMAIL="admin@jaiaircargo.com"
+ADMIN_PASSWORD="use-a-strong-password-12-plus-chars"
+CORS_ORIGIN="http://localhost:3000"
+PORT=4000
